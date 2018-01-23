@@ -1,13 +1,16 @@
 // EMAIL="x@y.com" node ./migrations/manual_password_reset.js
 // Be sure to have PRODUCTION_DB in your config.json
 
+// IMPORTANT: this script isn't updated to use the new password encryption that uses bcrypt
+// using it will break accounts and should not be used until upgraded
+
 var nconf = require('nconf'),
   path = require('path');
 nconf.argv().env().file('user', path.join(path.resolve(__dirname, '../config.json')));
 
 var Users = require('mongoskin').db(nconf.get("PRODUCTION_DB:URL"), nconf.get("PRODUCTION_DB").CREDS).collection('users'),
   async = require('async'),
-  utils = require('../website/src/utils'),
+  utils = require('../website/server/utils'),
   salt = utils.makeSalt(),
   newPassword =  utils.makeSalt(), // use a salt as the new password too (they'll change it later)
   hashed_password = utils.encryptPassword(newPassword, salt);

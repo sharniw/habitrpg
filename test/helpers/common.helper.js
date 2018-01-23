@@ -1,13 +1,14 @@
 import mongoose from 'mongoose';
 
-import { wrap as wrapUser } from '../../common/script/index';
-import { model as User } from '../../website/src/models/user';
+import { wrap as wrapUser } from '../../website/common/script/index';
+import { model as User } from '../../website/server/models/user';
 import {
   DailySchema,
   HabitSchema,
   RewardSchema,
   TodoSchema,
-} from '../../website/src/models/task';
+} from '../../website/server/models/task';
+export {translate} from './translate';
 
 export function generateUser (options = {}) {
   let user = new User(options).toObject();
